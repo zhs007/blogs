@@ -92,13 +92,14 @@ static Data getData(const std::string& filename, bool forString)
     
     //<-- zhs007 @ 160111
     // 如果是字符串，处理掉BOM
-    if (forString) {
+    // 注意：实测发现内部大量的脚本读取是二进制方式，因此屏蔽掉判断
+    //if (forString) {
         if (buffer[0] == 0xef && buffer[1] == 0xbb && buffer[2] == 0xbf) {
             buffer[0] = ' ';
             buffer[1] = ' ';
             buffer[2] = ' ';
         }
-    }
+    //}
     //<-- end
     
     if (nullptr == buffer || 0 == readsize)
@@ -140,13 +141,14 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
 
         //<-- zhs007 @ 160111
         // 如果不是二进制读取方式，需要处理BOM
-        if (strstr(mode, "b") != NULL) {
+        // 注意：实测发现内部大量的脚本读取是二进制方式，因此屏蔽掉判断
+        //if (strstr(mode, "b") != NULL) {
             if (buffer[0] == 0xef && buffer[1] == 0xbb && buffer[2] == 0xbf) {
                 buffer[0] = ' ';
                 buffer[1] = ' ';
                 buffer[2] = ' ';
             }
-        }
+        //}
         //<-- end
     } while (0);
     
